@@ -6,18 +6,25 @@ import PackageDescription
 let package = Package(
   name: "swift-package-test",
   platforms: [
-        .iOS(.v18)
-    ], 
+    .iOS(.v18)
+  ],
   products: [
     .library(name: "FeatureOne", targets: ["FeatureOne"]),
     .library(name: "FeatureTwo", targets: ["FeatureTwo"]),
-    .library(name: "FeatureThree", targets: ["FeatureThree"])
+    .library(name: "FeatureThree", targets: ["FeatureThree"]),
   ],
   targets: [
+    .target(name: "Dependencies", dependencies: ["FeatureOneInterface"]),
     .target(name: "FeatureOne", dependencies: ["FeatureOneInterface"]),
     .target(name: "FeatureOneInterface", dependencies: []),
-    .target(name: "FeatureTwo", dependencies: ["FeatureOneInterface"]),
-    .target(name: "FeatureThree", dependencies: ["FeatureOneInterface"]),
-    .executableTarget(name: "FeatureMain", dependencies: ["FeatureThree", "FeatureOne"])
+    .target(name: "FeatureTwo", dependencies: ["Dependencies"]),
+    .target(
+      name: "FeatureThree",
+      dependencies: ["Dependencies"]
+    ),
+    .executableTarget(
+      name: "FeatureMain",
+      dependencies: ["FeatureThree", "FeatureOne", "Dependencies"]
+    ),
   ]
 )

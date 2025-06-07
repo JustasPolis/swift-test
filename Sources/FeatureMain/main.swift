@@ -1,6 +1,6 @@
 import FeatureOne
 import FeatureThree
 
-let test = FeatureThree(featureOne: FeatureOne())
+let test = FeatureThree(dependencies: AppDependenciesImpl())
 
 print(test.fromFeatureOne())
